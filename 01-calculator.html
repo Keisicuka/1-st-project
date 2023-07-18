@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title> Calculator </title>
+  <style>
+    body {
+      font-family: serif;
+      text-align: center;
+    }
+    
+    .background {
+      width: 340px;
+      height: 400px;
+      background-color: rgba(22, 22, 22, 0.659);
+      margin: auto;
+      border: solid;
+      border-radius: 25px;
+      padding: 10px;
+      box-shadow: 10px 10px 10px rgb(208, 191, 191);
+    }
+    
+    button{
+      background-color: rgba(0, 0, 0, 0.385);
+      color: white;
+      width: 60px;
+      height: 60px;
+      font-size: 25px;
+      margin: 5px;
+      border: groove;
+      border-radius: 20px;
+      cursor: pointer;
+      box-shadow: 8px 8px 8px rgba(95, 93, 93, 0.977);
+    }
+
+    button:hover{
+      opacity: 0.6;
+    }
+    
+    .screen{
+      box-sizing: border-box;
+      background-color: rgb(227, 227, 216);
+      width: 300px;
+      height: 50px;
+      font-size: 25px;
+      border: 1px solid black;
+      border-radius: 10px;
+      margin-top: 15px;
+      margin-left: 19px;
+      margin-bottom: 10px;
+      box-shadow: 10px 10px 10px rgba(94, 92, 92, 0.977);
+      text-align: right;
+      color: black;
+      padding-top: 20px;
+      overflow: auto;
+      padding-right: 20px;
+      padding-top: 8px;
+    }
+  </style>
+</head>
+
+<body>
+    <h1 style = "font-family: Verdana, Geneva, Tahoma, sans-serif;
+    color: rgb(66, 66, 66); text-align: center; 
+    margin-bottom: 40px; font-size: 40px;"> My calculator </h1>
+    
+  <div class = "background">
+    
+    <div class = "screen">
+      0
+    </div>
+  
+    <div class = "calc-buttons">
+   
+      <div>
+        <button> 1 </button>
+        <button> 2 </button>
+        <button> 3 </button>
+        <button> <b> <i> &plus; </i> </b> </button>
+      </div>
+
+      <div>
+        <button> 4 </button>
+        <button> 5 </button>
+        <button> 6 </button>
+        <button> <b> <i> &minus; </i> </b> </button>
+      </div>
+
+      <div> 
+        <button> 7 </button>
+        <button> 8 </button>
+        <button> 9 </button>
+        <button> <b> <i> &times; </i> </b> </button>
+      </div>
+
+      <div>
+        <button> <b> <i> 0 </i> </b> </button>
+        <button> <b> <i> AC </i> </b> </button>
+        <button> <b> <i> &equals; </i> </b> </button>
+        <button> <b> <i> &divide; </i> </b> </button>
+      </div>
+
+    </div>
+  </div>
+
+
+  <script>
+    let total =  0;
+    let num = " ";
+    let operator;
+    const screen = document.querySelector('.screen');
+
+    function buttonClick(valueofButton) {
+      if (isNaN(valueofButton)) {
+        symbol_1(valueofButton);
+      } else {
+        number(valueofButton);
+      }
+      screen.innerText = num;
+    }
+
+    function symbol_1(symbol) {
+      switch(symbol) {
+        case  'AC':
+          num = '0'; 
+          total = 0;
+          break;
+          case '=':
+            if (operator === null){
+              return
+            }     
+            calculation(parseInt(num));
+            operator = null;
+            num = total;
+            total = 0;
+            break;
+            case '+':
+            case '−':
+            case '×':
+            case '÷':
+              math_calc(symbol);
+              break;
+          }
+    }
+    function math_calc(symbol){
+      if (num ==='0'){
+        return;
+      }
+      
+      const intNum = parseInt(num);
+   
+      if (total === 0){
+        total = intNum;
+      } else {
+        calculation(intNum);
+      }
+      operator = symbol;
+      num = "";
+      
+    }
+
+    function calculation (intNum) {
+      if (operator === '+') {
+        total += intNum;
+      } else if (operator === '−'){
+        total -= intNum;
+      } else if(operator === '×'){
+        total *= intNum;
+      } else if(operator === '÷'){
+        total /= intNum;
+      }
+    }
+
+    function number(numberString) {
+      if (num ==='0') {
+        num = numberString;
+      }else {
+        num += numberString;
+      }
+    }
+
+    function event() {
+      document.querySelector('.calc-buttons').
+      addEventListener('click', function(event) {
+        buttonClick(event.target.innerText);
+      })
+    }
+
+    event();
+
+  </script>
+</body>
+</html>
